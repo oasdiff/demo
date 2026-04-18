@@ -1,0 +1,22 @@
+name: oasdiff
+
+on:
+  pull_request:
+
+permissions:
+  pull-requests: write
+  statuses: write
+
+jobs:
+  oasdiff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - run: git fetch --depth=1 origin ${{ github.base_ref }}
+
+      - uses: oasdiff/oasdiff-action/pr-comment@v0.0.37
+        with:
+          base: 'origin/${{ github.base_ref }}:openapi.yaml'
+          revision: 'HEAD:openapi.yaml'
+          oasdiff-token: ${{ secrets.OASDIFF_TOKEN }}
