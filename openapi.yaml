@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Acme API
-  version: 2.1.0
+  version: 3.0.0
 paths:
   /users:
     get:
@@ -48,7 +48,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       responses:
         "200":
           description: User details
@@ -56,18 +57,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-    delete:
-      operationId: deleteUser
-      summary: Delete a user
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "204":
-          description: User deleted
   /products:
     get:
       operationId: listProducts
@@ -75,7 +64,7 @@ paths:
       parameters:
         - name: category
           in: query
-          required: false
+          required: true
           schema:
             type: string
       responses:
